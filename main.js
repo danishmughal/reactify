@@ -1,24 +1,22 @@
 import Expo from 'expo';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
 
-class App extends React.Component {
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+import Router from './src/Router';
+import reducers from './src/reducers';
+
+class App extends Component {
   render() {
+    const store = createStore(reducers);
+
     return (
-      <View style={styles.container}>
-        <Text>Open up main.js to start working on your app!</Text>
-      </View>
+      <Provider store={store}>
+        <Router />
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 Expo.registerRootComponent(App);
