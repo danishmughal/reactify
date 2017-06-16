@@ -7,7 +7,7 @@ import {
   ARTIST_FETCH_ERROR
 } from './types';
 
-const SPOTIFY_TOKEN = 'Bearer BQDkXRk_VxYLbCC1kPU3oWydgBh_2ZJeSDpYt7i2MmuaUllMZGr71BPgiCjsSpiIJh7vT6GsfMp3c4i55jeXeg';
+const SPOTIFY_TOKEN = 'Bearer BQA8hzbjcqZVDsbHw7gv76VyjRQev06v_0ojxOdJ5b6JVGcVf6IoVx0X6mYv4dXVmBtpvwjhI1ogbmjSzbwU_Q';
 const SEARCH_URL = 'https://api.spotify.com/v1/search?type=artist&q=';
 
 export const updateSearch = (searchterm) => {

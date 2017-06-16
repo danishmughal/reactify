@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ListView, LayoutAnimation, UIManager } from 'react-native';
+import { View, Text, ListView, FlatList, LayoutAnimation, UIManager } from 'react-native';
 import { connect } from 'react-redux';
 
 import { SearchBar } from 'react-native-elements';
@@ -14,25 +14,9 @@ class ArtistList extends Component {
     headerTitleStyle: { color: 'white' }
   };
 
-  componentWillMount() {
-    this.createDataSource(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.createDataSource(nextProps);
-  }
-
   componentWillUpdate() {
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.linear();
-  }
-
-  createDataSource({ artists }) {
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
-
-    this.dataSource = ds.cloneWithRows(artists);
   }
 
   searchArtist() {
@@ -40,26 +24,27 @@ class ArtistList extends Component {
     this.props.fetchArtists();
   }
 
-
-  renderRow(artist) {
+  keyExtractor = (item, index) => item.id;
+  renderRow = (artist) => {
+    console.log(artist);
     if (artist.images.length > 0) {
-      return <Artist artist={artist} />;
+      return <Artist id={artist.id} artist={artist} />;
     }
     return null;
   }
 
   renderList() {
     if (this.props.loading) {
-      return <Text>Loading....</Text>;
+      return <Text style={{ color: 'white' }}>Loading....</Text>;
     } else if (this.props.artists.length <= 0) {
-      return <Text>Nothing found</Text>;
+      return <Text style={{ color: 'white' }}>Nothing found</Text>;
     }
 
     return (
-      <ListView
-        enableEmptySections
-        dataSource={this.dataSource}
-        renderRow={this.renderRow}
+      <FlatList
+        data={this.props.artists}
+        keyExtractor={this.keyExtractor}
+        renderItem={(rowData) => this.renderRow(rowData.item)}
       />
     );
   }
