@@ -9,10 +9,9 @@ import Artist from './Artist';
 
 class ArtistList extends Component {
   static navigationOptions = {
-    title: 'Reactify',
-    headerStyle: { backgroundColor: '#191B1A' },
-    headerTitleStyle: { color: 'white' }
-  };
+    headerTitle: 'Reactify',
+    headerBackTitle: 'Search'
+  }
 
   componentWillUpdate() {
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -23,10 +22,16 @@ class ArtistList extends Component {
     this.props.fetchArtists();
   }
 
-  keyExtractor = (item) => item.id;
+  keyExtractor = item => item.id;
   renderRow = (artist) => {
     if (artist.images.length > 0) {
-      return <Artist id={artist.id} artist={artist} />;
+      return (
+        <Artist
+          id={artist.id}
+          artist={artist}
+          navigation={this.props.navigation}
+        />
+      );
     }
     return null;
   }
@@ -42,7 +47,7 @@ class ArtistList extends Component {
       <FlatList
         data={this.props.artists}
         keyExtractor={this.keyExtractor}
-        renderItem={(rowData) => this.renderRow(rowData.item)}
+        renderItem={rowData => this.renderRow(rowData.item)}
         style={{ paddingTop: 35 }}
       />
     );

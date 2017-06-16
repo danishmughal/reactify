@@ -4,13 +4,18 @@ import { View, Text, Dimensions, TouchableOpacity, Image } from 'react-native';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Artist extends Component {
+  selectArtist() {
+    console.log(this.props);
+    this.props.navigation.navigate('TrackList', { artist: this.props.artist });
+  }
+
   render() {
     const { name, images, followers } = this.props.artist;
     const { imageStyle, captionStyle, cardStyle, artistStyle } = styles;
 
     return (
       <View style={cardStyle}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.selectArtist.bind(this)}>
           <Image source={{ uri: images[0].url }} style={imageStyle} />
           <Text style={artistStyle}>{name}</Text>
           <Text style={captionStyle}>{followers.total} followers</Text>
