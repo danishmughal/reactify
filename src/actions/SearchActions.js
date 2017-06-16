@@ -3,10 +3,11 @@ import axios from 'axios';
 import {
   SEARCH_UPDATED,
   ARTIST_FETCH,
-  ARTIST_FETCH_SUCCESS
+  ARTIST_FETCH_SUCCESS,
+  ARTIST_FETCH_ERROR
 } from './types';
 
-const SPOTIFY_TOKEN = 'Bearer BQCFb0bVmeot7-mVeSFQQt-SIYP23AWpyU3YK-0EONvLzPoTwlX5D6qxKdv1wCkuu1MouhCnRch55CeID8Tuyw';
+const SPOTIFY_TOKEN = 'Bearer BQDkXRk_VxYLbCC1kPU3oWydgBh_2ZJeSDpYt7i2MmuaUllMZGr71BPgiCjsSpiIJh7vT6GsfMp3c4i55jeXeg';
 const SEARCH_URL = 'https://api.spotify.com/v1/search?type=artist&q=';
 
 export const updateSearch = (searchterm) => {
@@ -28,14 +29,15 @@ export const submitSearch = (searchterm) => {
 
     axios.get(SEARCH_URL + searchterm, config)
       .then((response) => {
-        console.log(response);
         dispatch({
           type: ARTIST_FETCH_SUCCESS,
-          payload: response.data.artists
+          payload: response.data.artists.items
         });
       })
       .catch((error) => {
-        console.log(error);
+        dispatch({
+          type: ARTIST_FETCH_ERROR
+        });
       });
   };
 };
