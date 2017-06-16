@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ListView, FlatList, LayoutAnimation, UIManager } from 'react-native';
+import { View, Text, FlatList, LayoutAnimation, UIManager } from 'react-native';
 import { connect } from 'react-redux';
 
 import { SearchBar } from 'react-native-elements';
@@ -10,7 +10,7 @@ import Artist from './Artist';
 class ArtistList extends Component {
   static navigationOptions = {
     title: 'Reactify',
-    headerStyle: { backgroundColor: '#282828' },
+    headerStyle: { backgroundColor: '#191B1A' },
     headerTitleStyle: { color: 'white' }
   };
 
@@ -20,13 +20,11 @@ class ArtistList extends Component {
   }
 
   searchArtist() {
-    console.log('searching');
     this.props.fetchArtists();
   }
 
-  keyExtractor = (item, index) => item.id;
+  keyExtractor = (item) => item.id;
   renderRow = (artist) => {
-    console.log(artist);
     if (artist.images.length > 0) {
       return <Artist id={artist.id} artist={artist} />;
     }
@@ -35,9 +33,9 @@ class ArtistList extends Component {
 
   renderList() {
     if (this.props.loading) {
-      return <Text style={{ color: 'white' }}>Loading....</Text>;
+      return <Text style={styles.placeholderStyle}>Loading....</Text>;
     } else if (this.props.artists.length <= 0) {
-      return <Text style={{ color: 'white' }}>Nothing found</Text>;
+      return <Text style={styles.placeholderStyle}>Nothing found - try searching.</Text>;
     }
 
     return (
@@ -45,21 +43,22 @@ class ArtistList extends Component {
         data={this.props.artists}
         keyExtractor={this.keyExtractor}
         renderItem={(rowData) => this.renderRow(rowData.item)}
+        style={{ paddingTop: 35 }}
       />
     );
   }
 
 
   render() {
-    const { searchBarContainerStyle, backgroundStyle } = styles;
+    const { searchBarContainerStyle, searchBarInputStyle, backgroundStyle } = styles;
 
     return (
       <View style={backgroundStyle}>
         <SearchBar
-          round
           onChangeText={searchterm => this.props.updateSearch(searchterm)}
           placeholder="Search for an Artist..."
           containerStyle={searchBarContainerStyle}
+          inputStyle={searchBarInputStyle}
           returnKeyType="search"
           onSubmitEditing={event => this.props.submitSearch(event.nativeEvent.text)}
         />
@@ -70,11 +69,23 @@ class ArtistList extends Component {
 }
 
 const styles = {
+  placeholderStyle: {
+    flex: 1,
+    paddingTop: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    color: '#88898D',
+    fontWeight: 'bold',
+    fontSize: 16
+  },
   searchBarContainerStyle: {
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    backgroundColor: '#282828',
-    marginBottom: 35
+    backgroundColor: '#191B1A'
+  },
+  searchBarInputStyle: {
+    color: '#88898D'
   },
   backgroundStyle: {
     backgroundColor: 'black',

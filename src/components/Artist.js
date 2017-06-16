@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, TouchableOpacity, Image } from 'react-native';
 
-import { Card } from 'react-native-elements';
-
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Artist extends Component {
@@ -35,13 +33,14 @@ const styles = {
     marginBottom: 10
   },
   artistStyle: {
-    fontSize: 12,
+    fontSize: 16,
     color: 'white',
     fontWeight: 'bold',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    lineHeight: 20
   },
   captionStyle: {
-    fontSize: 10,
+    fontSize: 13,
     color: 'white',
     fontWeight: '300',
     alignSelf: 'center'
