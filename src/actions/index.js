@@ -1,1 +1,1 @@
-export * from './ArtistActions';
+export * from './SearchActions';

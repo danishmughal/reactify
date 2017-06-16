@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import ArtistReducer from './ArtistReducer';
+import SearchReducer from './SearchReducer';
 
 export default combineReducers({
-  artists: ArtistReducer,
+  artists: SearchReducer
 });
