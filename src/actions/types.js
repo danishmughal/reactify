@@ -1,6 +1,7 @@
 // Spotify Config
 // To be masked via external service in the future
-export const SPOTIFY_TOKEN = 'Bearer BQDIE_3pB-KtmmQ3mqQvdtLN5oLFqkHk2ieJWf3J0hEoPGAXL7qpJTQBGDEQrbNtzNpaZjYtGuWUv8oFoIlJeg';
+const SPOTIFY_ACCESS_TOKEN = 'BQCeLl1o45xbUz9FX9A5M9Md81N6qEwMorkH2AEfgNzJ60dtjA38LwepLKT-w81FzaRZrVQVRBztPArED-YPTA'
+export const SPOTIFY_TOKEN = `Bearer ${SPOTIFY_ACCESS_TOKEN}`;
 export const SEARCH_URL = 'https://api.spotify.com/v1/search?type=artist&q=';
 export const ARTIST_URL = 'https://api.spotify.com/v1/artists/';
 
