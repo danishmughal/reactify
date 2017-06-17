@@ -28,7 +28,7 @@ class Deck extends Component {
     const panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (event, gesture) => {
-        position.setValue({ x: gesture.dx, y: gesture.dy })
+        position.setValue({ x: gesture.dx, y: gesture.dy });
       },
       onPanResponderRelease: (event, gesture) => {
         if (gesture.dx > SWIPE_THRESHOLD) {
@@ -42,6 +42,11 @@ class Deck extends Component {
     });
 
     this.state = { panResponder, position, index: 0 };
+  }
+
+  componentWillMount() {
+    console.log('component will mount');
+    this.props.updateCurrentTrack(this.props.data[this.state.index]);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -88,6 +93,7 @@ class Deck extends Component {
 
     // Move onto next card
     this.setState({ index: this.state.index + 1 });
+    this.props.updateCurrentTrack(this.props.data[this.state.index]);
 
     // Reset position object back to (0,0)
     this.state.position.setValue({ x: 0, y: 0 });
@@ -129,10 +135,6 @@ class Deck extends Component {
         </Card>
       );
     }
-
-    console.log('props');
-    console.log(this.props);
-
 
     // Call renderCard from props on each card in data
     return this.props.data.map((item, i) => {

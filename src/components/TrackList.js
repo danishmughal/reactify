@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, Image } from 'react-native';
-import { Card, Button } from 'react-native-elements';
 
 import { connect } from 'react-redux';
-import { loadArtistTracks } from '../actions';
+import { loadArtistTracks, loadTrack } from '../actions';
 
 import Deck from './Deck';
 
@@ -36,21 +35,36 @@ class TrackList extends Component {
     if (this.props.loading) {
       return (
         <Text style={styles.placeholderStyle}>Loading....</Text>
-      )
+      );
     }
     return (
       <Deck
         data={this.props.tracks}
         renderCard={this.renderCard}
         renderNoCards={this.renderNoCards}
+        updateCurrentTrack={track => this.props.loadTrack(track)}
       />
+    );
+  }
+
+  renderAudio() {
+    if (this.props.currentTrack) {
+      return <Text style={styles.captionStyle}>{this.props.currentTrack.name}</Text>;
+    }
+    return (
+      <Text>Audio Player</Text>
     );
   }
 
   render() {
     return (
       <View style={styles.backgroundStyle}>
-        {this.renderList()}
+        <View style={{flex: 1}}>
+          {this.renderList()}
+        </View>
+        <View style={styles.audioStyle}>
+          {this.renderAudio()}
+        </View>
       </View>
     );
   }
@@ -60,6 +74,7 @@ const styles = {
   backgroundStyle: {
     backgroundColor: 'black',
     flex: 1,
+    flexDirection: 'column',
     paddingTop: 35
   },
   cardStyle: {
@@ -83,8 +98,7 @@ const styles = {
   captionStyle: {
     fontSize: 13,
     color: 'white',
-    fontWeight: '300',
-    alignSelf: 'center'
+    fontWeight: '300'
   },
   placeholderStyle: {
     flex: 1,
@@ -95,13 +109,17 @@ const styles = {
     color: '#88898D',
     fontWeight: 'bold',
     fontSize: 16
+  },
+  audioStyle: {
+    alignSelf: 'center',
+    paddingBottom: 100
   }
 };
 
 
 const mapStateToProps = (state) => {
-  const { tracks, loading } = state.tracks;
-  return { tracks, loading };
+  const { tracks, loading, currentTrack } = state.tracks;
+  return { tracks, loading, currentTrack };
 };
 
-export default connect(mapStateToProps, { loadArtistTracks })(TrackList);
+export default connect(mapStateToProps, { loadArtistTracks, loadTrack })(TrackList);

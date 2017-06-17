@@ -5,7 +5,9 @@ import {
   ARTIST_URL,
   FETCH_TRACKS,
   FETCH_TRACKS_SUCCESS,
-  FETCH_TRACKS_ERROR
+  FETCH_TRACKS_ERROR,
+  FETCH_CURRENT_TRACK,
+  FETCH_CURRENT_TRACK_SUCCESS
 } from './types';
 
 
@@ -34,5 +36,12 @@ export const loadArtistTracks = ({ id }) => {
           type: FETCH_TRACKS_ERROR
         });
       });
+  };
+};
+
+export const loadTrack = (track) => {
+  return {
+    type: FETCH_CURRENT_TRACK,
+    payload: track
   };
 };
